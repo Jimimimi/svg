@@ -1,0 +1,55 @@
+<html>
+  <head>
+
+    <style>
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+    #vis {
+      display: inline-block;
+    }
+    .coords {
+      display: inline-block;
+      float: right;
+      width: 100px;
+    }
+    .axis path {
+        fill: none;
+        stroke: #777;
+        shape-rendering: crispEdges;
+    }
+    .axis text {
+        font-family: arial;
+        font-size: 13px;
+        fill: #222;
+    }
+    .axis line {
+      stroke: #ccc;
+    }
+
+    </style>
+  </head>
+  <body>
+    <svg id="vis" width="400" height="400"></svg>
+
+    <div class="coords">
+      <h3>Clicked</h3>
+      <p>
+        x: <span id="xclicked"></span><br />
+        y: <span id="yclicked"></span>
+      </p>
+
+      <h3>Intersection</h3>
+      <p>
+        x: <span id="xint"></span><br />
+        y: <span id="yint"></span>
+      </p>
+    </div>
+    <script src="js/d3.v3.min.js"></script>
+    <script src="js/2D.js"></script>
+    <script src="app.js"></script>
+
+  </body>
+</html>
