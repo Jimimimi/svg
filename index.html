@@ -9,20 +9,17 @@
       background: whitesmoke;
       padding:20px;
     }
-
     .line {
       fill: none;
       stroke: steelblue;
       stroke-width: 1.5px;
     }
-
     .value {
       text-align: center;
       margin-left: 10px;
       border: dashed 1px rgba(173,173,173,0.4);
       min-width: 30px;
     }
-
     td {
       min-width: 10px;
     }
@@ -30,7 +27,6 @@
     #yclicked {
       color: #4682b4;
     }
-
     #xint,
     #yint {
       color: red;
@@ -44,7 +40,6 @@
       position: relative;
       font-size: 8px;
     }
-
     #vis {
       display: inline-block;
     }
@@ -53,13 +48,19 @@
       float: right;
       width: 40%;
     }
+    .axis-label {
+      font-family: monospace;
+      font-size: 0.8em;
+      font-weight: bolder;
+      fill: #333;
+    }
     .axis path {
         fill: none;
         stroke: #777;
         shape-rendering: crispEdges;
     }
     .axis text {
-        font-family: arial;
+        font-family: monospace;
         font-size: 13px;
         fill: #222;
     }
