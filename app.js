@@ -43,11 +43,24 @@ function init() {
       .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
       .call(xAxis);
 
+    var xAxisLabel = vis.append("text")
+      .attr("class", "axis-label")
+      .attr("transform", "translate(170,420)")
+      .text("Air volume (m3/h)");
+    
     var yAxisEl = vis.append("svg:g")
       .attr("class", "axis")
       .attr("transform", "translate(" + (MARGINS.left) + ",0)")
       .call(yAxis);
 
+    var yAxisLabel = vis.append("text")
+      .attr("class", "axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -5)
+      .attr("x",0 - (HEIGHT / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Static pressure (Pa)");
       // -- Paths
 
     var statLineEl = vis.append('svg:path')
