@@ -2,18 +2,56 @@
   <head>
 
     <style>
+
+    body {
+      font-family: monospace;
+      font-size: 16px;
+      background: whitesmoke;
+      padding:20px;
+    }
+
     .line {
       fill: none;
       stroke: steelblue;
       stroke-width: 1.5px;
     }
+
+    .value {
+      text-align: center;
+      margin-left: 10px;
+      border: dashed 1px rgba(173,173,173,0.4);
+      min-width: 30px;
+    }
+
+    td {
+      min-width: 10px;
+    }
+    #xclicked,
+    #yclicked {
+      color: #4682b4;
+    }
+
+    #xint,
+    #yint {
+      color: red;
+    }
+    .unit {
+      font-size: 10px;
+    }
+    .unit em {
+      font-style: normal;
+      top: -3px;
+      position: relative;
+      font-size: 8px;
+    }
+
     #vis {
       display: inline-block;
     }
     .coords {
       display: inline-block;
       float: right;
-      width: 100px;
+      width: 40%;
     }
     .axis path {
         fill: none;
@@ -35,21 +73,85 @@
     <svg id="vis" width="400" height="400"></svg>
 
     <div class="coords">
-      <h3>Clicked</h3>
-      <p>
-        x: <span id="xclicked"></span><br />
-        y: <span id="yclicked"></span>
-      </p>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="">
+              Selected
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Static pressure
+            </td>
+            <td>
+            </td>
+            <td class="value" id="xclicked">
+            </td>
+            <td class="unit">
+              Pa
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Air volume
+            </td>
+            <td>
 
-      <h3>Intersection</h3>
-      <p>
-        x: <span id="xint"></span><br />
-        y: <span id="yint"></span>
-      </p>
+            </td>
+            <td class="value" id="yclicked">
+
+            </td>
+            <td class="unit">
+              m<em>3</em>/h
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <table>
+        <thead>
+          <tr>
+            <th colspan="">
+              Optimal
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Static pressure
+            </td>
+            <td>
+            </td>
+            <td class="value" id="xint">
+
+            </td>
+            <td class="unit">
+              Pa
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Air volume
+            </td>
+            <td>
+            </td>
+            <td class="value" id="yint">
+            </td>
+            <td class="unit">
+              m<em>3</em>/h
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
     <script src="js/d3.v3.min.js"></script>
     <script src="js/2D.js"></script>
-    <script src="app.js"></script>
+    <script src="basicd3v3.js"></script>
 
   </body>
 </html>
