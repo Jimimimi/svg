@@ -1,8 +1,10 @@
 
 init();
-renderSet(1);
-renderSet(2);
-renderSet(3);
+// renderSet(1);
+// renderSet(2);
+// renderSet(3);
+
+buildOptions();
 function init() {
   // --- Definitions --- //
   var vis     = d3.select("#vis"),
@@ -68,9 +70,9 @@ function init() {
 
     var statLineEl = vis.append('svg:path')
       .attr('id', 'statLine')
-      .attr('d', lineGen(getData()[0].data))
-      .attr('stroke', 'red')
-      .attr('stroke-width', 3)
+      // .attr('d', lineGen(getData()[0].data))
+      // .attr('stroke', 'red')
+      // .attr('stroke-width', 3)
       .attr('fill', 'none');
 
     var curveLineEl = vis.append('svg:path')
@@ -132,9 +134,17 @@ function init() {
 }
 
 function renderSet(id){
+  app.elements.curveLine
+    .attr('d','');
+
+  app.elements.dotSelected
+    .attr('r',0);
+  app.elements.dotIntersection
+    .attr('r',0);
+
   var d = getData()[id];
-  app.vis.append('svg:path')
-    .attr('id', 'statLine_' + id)
+
+  app.elements.statLine
     .attr('d', app.generators.line(d.data))
     .attr('stroke', d.borderColor)
     .attr('stroke-width', d.borderWidth)
@@ -193,7 +203,7 @@ function generateCurve(point) {
 
   function alphaFromPoint(p){
     // a = y / x^2
-    return p.y / Math.pow(p.x, 2)
+    return p.y / Math.pow(p.x-1, 2)
   };
 
   function y(x) {
@@ -328,4 +338,34 @@ function getMinMax(datasets){
     }
   };
 
+}
+
+function buildOptions(){
+  var legend = d3.select('#legend');
+  var data = getData();
+
+  data.forEach(function(dataset,i){
+    legend.append('li')
+    .attr('id','dataset-' + i)
+    .attr('class','legend-item')
+    .style('cursor', 'pointer')
+    .style('font-size', '0.7em')
+    .style('list-style', 'none')
+    .text(dataset.label)
+    .on('click', function(){
+      var di = i;
+      d3.selectAll('.legend-item')
+      .attr('class', 'legend-item');
+
+      d3.select(this)
+      .attr('class', 'legend-item active');
+
+      renderSet(i);
+
+    })
+    .append('div')
+    .attr('class','option')
+    .style('background', dataset.borderColor);
+
+  });
 }

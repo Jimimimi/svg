@@ -13,6 +13,7 @@
       fill: none;
       stroke: steelblue;
       stroke-width: 1.5px;
+      transition: 0.3s
     }
     .value {
       text-align: center;
@@ -49,6 +50,35 @@
       float: right;
       width: 40%;
     }
+
+    #legend {
+      padding:10px;
+      margin-bottom: 30px;
+    }
+
+    .legend-item {
+      list-style: none;
+      margin-bottom: 10px;
+      position: relative;
+      transition: 0.3s;
+
+      opacity: 0.5;
+    }
+    .legend-item .option {
+      height: 0.7em;
+      width: 0.7em;
+
+      position: absolute;
+      left: -15px;
+      top: 1px;
+
+      border: solid 1px #222;
+      border-radius: 50%;
+
+    }
+    .legend-item.active {
+      opacity: 1;
+    }
     .axis-label {
       font-family: monospace;
       font-size: 0.8em;
@@ -72,9 +102,13 @@
     </style>
   </head>
   <body>
+
     <svg id="vis" width="420" height="420"></svg>
 
     <div class="coords">
+      <div class="legend" id="legend">
+      </div>
+
       <table>
         <thead>
           <tr>
@@ -149,6 +183,8 @@
           </tr>
         </tbody>
       </table>
+
+
 
     </div>
     <script src="js/d3.v3.min.js"></script>
