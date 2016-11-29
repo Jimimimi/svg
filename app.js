@@ -1,6 +1,8 @@
 
 init();
-
+renderSet(1);
+renderSet(2);
+renderSet(3);
 function init() {
   // --- Definitions --- //
   var vis     = d3.select("#vis"),
@@ -15,12 +17,13 @@ function init() {
       },
       N_SEGMENTS = 100,
       // Scales , ranges, domains
+      minMax  = getMinMax(getData()),
       xScale  = d3.scale.linear()
                 .range([MARGINS.left, WIDTH - MARGINS.right])
-                .domain([0, 200]),
+                .domain([0, minMax.max.x]),
       yScale  = d3.scale.linear()
                 .range([HEIGHT - MARGINS.top, MARGINS.bottom])
-                .domain([0, 200]),
+                .domain([0, minMax.max.y]),
       // Axes
       xAxis   = d3.svg.axis().scale(xScale),
       yAxis   = d3.svg.axis().scale(yScale).orient('left'),
@@ -47,7 +50,7 @@ function init() {
       .attr("class", "axis-label")
       .attr("transform", "translate(170,420)")
       .text("Air volume (m3/h)");
-    
+
     var yAxisEl = vis.append("svg:g")
       .attr("class", "axis")
       .attr("transform", "translate(" + (MARGINS.left) + ",0)")
@@ -56,7 +59,7 @@ function init() {
     var yAxisLabel = vis.append("text")
       .attr("class", "axis-label")
       .attr("transform", "rotate(-90)")
-      .attr("y", -5)
+      .attr("y", 0)
       .attr("x",0 - (HEIGHT / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
@@ -105,7 +108,8 @@ function init() {
     var app = {
       vis: vis,
       constants: {
-        n_segments: N_SEGMENTS
+        n_segments: N_SEGMENTS,
+        minMax: minMax
       },
       elements: {
         statLine:        statLineEl,
@@ -125,6 +129,16 @@ function init() {
 
     window.app = app;
 
+}
+
+function renderSet(id){
+  var d = getData()[id];
+  app.vis.append('svg:path')
+    .attr('id', 'statLine_' + id)
+    .attr('d', app.generators.line(d.data))
+    .attr('stroke', d.borderColor)
+    .attr('stroke-width', d.borderWidth)
+    .attr('fill', 'none');
 }
 
 function graphOnClick() {
@@ -193,7 +207,7 @@ function generateCurve(point) {
     y: 0
   }];
   // Iterate over x, with a step of 10, and generate a point with our y(x) fn
-  for (var x = 10; x < 250; x += 10) {
+  for (var x = 10; x < app.constants.minMax.max.x; x += 10) {
 
     datum.push({
        x: x,
@@ -222,36 +236,96 @@ function getIntersection(){
 
 function getData() {
   var datasets = [{
-    label: 'Dataset 1',
+    label:"DUCT IN-LINE 100/130",
     backgroundColor: 'transparent',
-    borderColor: 'red',
+    borderColor: 'green',
     borderWidth: 2,
-    data: [{
-      y: 137.29,
-      x: 0.1
-    }, {
-      y: 138.12,
-      x: 14.37
-    }, {
-      y: 133.92,
-      x: 36.69
-    }, {
-      y: 116.32,
-      x: 64.73
-    }, {
-      y: 83.76,
-      x: 91.1
-    }, {
-      y: 52.08,
-      x: 108.49
-    }, {
-      y: 20.78,
-      x: 122.14
-    }, {
-      y: 0,
-      x: 129.99
-    }]
-  }];
+    data: [
+      {y:137.29,x:0.1},
+      {y:138.12,x:14.37},
+      {y:133.92,x:36.69},
+      {y:116.32,x:64.73},
+      {y:83.76,x:91.1},
+      {y:52.08,x:108.49},
+      {y:20.78,x:122.14},
+      {y:0,x:129.99}
+    ]
+  },{
+    label:"DUCT IN-LINE 100/270",
+    backgroundColor: 'transparent',
+    borderColor: 'yellow',
+    borderWidth: 2,
+    data:[
+      {y:225.55,x:0.1},
+      {y:208.86,x:42.96},
+      {y:183.99,x:88.37},
+      {y:139.92,x:147.13},
+      {y:94.09,x:194.34},
+      {y:42.21,x:238.53},
+      {y:0,x:269.78}
+    ]
+  },{
+    label:"DUCT IN-LINE 125/320",
+    backgroundColor: 'transparent',
+    borderColor: 'blue',
+    borderWidth: 2,
+    data:[
+      {y:225.55,x:0.1},
+      {y:223.12,x:33.04},
+      {y:214.66,x:77.07},
+      {y:187.24,x:144.38},
+      {y:146.06,x:202.56},
+      {y:103.03,x:245.7},
+      {y:61.68,x:278.94},
+      {y:32,x:299.67},
+      {y:0, x:319.66}
+    ],
+  },
+  {
+    label:"DUCT IN-LINE 150/560",
+    backgroundColor: 'transparent',
+    borderColor: 'darkgray',
+    borderWidth: 2,
+    data:[
+      {y:354.02,x:0.1},
+      {y:352.69,x:37.39},
+      {y:347.22,x:82.37},
+      {y:327.45,x:160.16},
+      {y:273.83,x:274.13},
+      {y:193.33,x:383.4},
+      {y:89,x:487.17},
+      {y:0,x:559.08}
+    ]
+  }
+];
 
   return datasets;
+}
+
+function getMinMax(datasets){
+  var x = [],
+      y = [];
+
+  datasets.map(function(e){
+      return e.data
+  })
+  .forEach(function(a){
+    a.forEach(function(d){
+      x.push(d.x);
+      y.push(d.y);
+    });
+
+  });
+
+  return {
+    min: {
+      x: 0,
+      y: 0
+    },
+    max: {
+      x: d3.max(x),
+      y: d3.max(y)
+    }
+  };
+
 }
