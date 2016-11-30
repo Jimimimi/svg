@@ -145,6 +145,8 @@ function renderSet(id){
   var d = getData()[id];
 
   app.elements.statLine
+    .transition()
+    .duration(2500)
     .attr('d', app.generators.line(d.data))
     .attr('stroke', d.borderColor)
     .attr('stroke-width', d.borderWidth)
