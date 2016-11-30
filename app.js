@@ -147,8 +147,7 @@ function renderSet(id){
   app.elements.statLine
     .transition()
     .duration(500)
-    .attr('d', app.generators.line(d.data));
-  app.elements.statLine
+    .attr('d', app.generators.line(d.data))
     .attr('stroke', d.borderColor)
     .attr('stroke-width', d.borderWidth)
     .attr('fill', 'none');
